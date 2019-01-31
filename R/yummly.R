@@ -32,17 +32,56 @@ bread <-
   bind_cols(tibble(ingredients = tmp2$matches$ingredients)) %>%
   unnest(ingredients) %>%
   mutate(basic_ingredients = str_replace_all(ingredients, c(".*water" = "water",
-                                                            "(?:\\d\\% )?(?:fat free )?milk" = "milk",
+                                                            "(?:\\d\\% )?(?:fat free )?(?:full-fat )?(?:[Ww]hole )?(skim )?(?:low fat )?[Mm]ilk" = "milk",
                                                             "unbleached " = "",
-                                                            "(?:large )?(?:medium )?(?:cage free )?egg(?:s)?(?: wash)?" = "eggs",
-                                                            ".*yeast" = "yeast",
-                                                            "(pure|crumbled|dark|whipping|firmly|packed|unsweetened|nonstick|organic|old-fashioned|frozen|chopped|softened|grated|ground|fresh|cooked|dried|coarse|strong|shredded|smoked|crushed|soft|fine) " = ""
-                                                            )))
+                                                            "(?:large )?(?:medium )?(?:small )?(?:cage free )?egg(?:s)?(?: wash)?" = "egg",
+                                                            ".*[Yy]east" = "yeast",
+                                                            "bicarbonate of soda" = "baking soda",
+                                                            ".*brown sugar" = "brown sugar",
+                                                            "nonfat dry milk powder" = "powdered milk",
+                                                            "granulated sugar" = "sugar",
+                                                            "wholewheat" = "whole wheat",
+                                                            "(greek )?yog[h]?urt" = "yogurt",
+                                                            "Guinness Beer" = "guinness",
+                                                            "Cream of Tartar" = "cream of tartar",
+                                                            "corn ?meal" = "corn meal",
+                                                            "(full|low) fat " = "",
+                                                            "granulated " = "",
+                                                            " with juice" = "",
+                                                            "ginger powder" = "ginger",
+                                                            "The Cheese Guy Asiago" = "asiago",
+                                                            "gouda cheese" = "gouda",
+                                                            "[Oo]ranges?" = "orange",
+                                                            "Equal|(liquid stevia)" = "artificial sweetener",
+                                                            "(?:mashed )?bananas?" = "banana",
+                                                            "all[- ]purpose " = "",
+                                                            "Butter" = "butter",
+                                                            "(.*)[Ss]alt" = "salt",
+                                                            " purée" = "",
+                                                            "(extra|sharp) " = "",
+                                                            "(black |instant )?coffee( granules)?( powder)?" = "coffee",
+                                                            "powdered " = "convectioners ",
+                                                            "caraway.*" = "caraway seed",
+                                                            "garlic powder|cloves" = "garlic",
+                                                            "blanched " = "",
+                                                            "basil.*" = "basil",
+                                                            "seeds" = "seed",
+                                                            "(white|yolk)s" = "\\1",
+                                                            "Dutch process " = "",
+                                                            "jalapeno chiles" = "jalapenos",
+                                                            "instant.*pudding" = "instant pudding",
+                                                            "(mashed )?potato.*" = "potato",
+                                                            " ?cheese" = "",
+                                                            "russet " = "",
+                                                            "Buttermilk" = "buttermilk",
+                                                            "^red " = "", "^raw " = "",
+                                                            "semi[- ]sweet chocolate (chips|morsels)" = "chocolate chips",
+                                                            " ?(flakes|runny|McCormick|natural|iodized|finely|melted|minced) ?" = "",
+                                                            "(porridge|old[- ]fashioned|quick-cooking|extra[- ]|virgin|white|yellow) " = "",
+                                                            "(diced|plain|[Ss]weet.[Cc]ream|salted|Lucerne|[Uu]nsalted|pure|crumbled|dark) " = "",
+                                                            "(whipping|firmly|packed|unsweetened|nonstick|organic|frozen|chopped) " = "",
+                                                            "(softened|grated|ground|fresh|cooked|sun|dried|coarse|strong) " = "",
+                                                            "(kalamata|mini|distilled|toasted|Borden|shredded|smoked|crushed|soft|fine) " = ""
+                                                            )) %>% str_to_lower())
 
-
-stbread$image90 <- as.vector(tmp2$matches$imageUrlsBySize$`90`, "character")
-
-
-%>%
-  as_tibble()
-  mutate(imageUrl90 = )
+unique(bread$basic_ingredients) %>% sort()
